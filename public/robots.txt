@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://python-30.nealfrazier.tech/sitemap.xml
