@@ -1,9 +1,9 @@
 <!-- xonettn -->
 <div align="center">
 
-# 📚 30 Days Of Python
+# 📚 30 Days of Python
 
-A free interactive guide to mastering Python in 30 days with a personalized AI tutor.
+A focused, interactive 30-day Python learning experience with AI-assisted guidance.
 
 
 ![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white) ![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
@@ -13,60 +13,6 @@ A free interactive guide to mastering Python in 30 days with a personalized AI t
 </div>
 
 ---
-
-## 📋 Overview
-A free interactive guide to mastering Python in 30 days with a personalized AI tutor.
-
-## 📦 Tech Stack
-- React
-- Vite
-- Express
-
-## 🗂️ Project Structure
-```
-30-Days-Of-Python/
-  - public
-  - src
-  (24 files total)
-```
-
-## 🚀 Getting Started
-
-### 📋 Prerequisites
-- Node.js (v18+)
-- npm or yarn
-
-### 📦 Installation
-```bash
-git clone https://github.com/1nc0gn30/30-Days-Of-Python.git
-cd 30-Days-Of-Python
-npm install
-```
-
-### 💻 Development
-```bash
-npm run dev
-```
-
-### 🔨 Build
-```bash
-npm run build
-```
-
-### ⚙️ Available Scripts
-  npm run dev - vite --port=3000 --host=0.0.0.0
-  npm run build - vite build
-  npm run preview - vite preview
-  npm run clean - rm -rf dist
-  npm run lint - tsc --noEmit
-
-## 📂 Original README
-<details>
-<summary>Click to expand original README</summary>
-
-# 30 Days of Python
-
-A focused, interactive 30-day Python learning experience with AI-assisted guidance.
 
 ## Snapshot
 - Canonical URL: `https://python-30.nealfrazier.tech/`
@@ -125,33 +71,6 @@ public/
 index.html
 vite.config.ts
 ```
-
-</details>
-
-## 📝 TODO / Roadmap
-- [ ] Add unit tests
-- [ ] Add LICENSE file
-- [ ] Add Dockerfile for containerized deployment
-- [ ] Add deployment configuration
-- [ ] Consider adding Tailwind CSS
-- [ ] Add CI/CD pipeline
-- [ ] Add contribution guidelines (CONTRIBUTING.md)
-- [ ] Improve error handling and edge cases
-- [ ] Add environment variable documentation
-- [ ] Update dependencies to latest versions
-- [ ] Add code comments and inline documentation
-
-## 🚀 Deployment
-This project can be deployed to Netlify, Vercel, or any static host.
-
-## 👤 Author
-**Neal Frazier** - [@AshAmplifies](https://github.com/1nc0gn30)
-
-## 🔗 Links
-- GitHub: https://github.com/1nc0gn30/30-Days-Of-Python
-
----
-*This README was enhanced as part of the neals-projects-2026 batch update.*
 
 ---
 
