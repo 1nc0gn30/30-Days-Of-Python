@@ -3,8 +3,8 @@
 A focused, interactive 30-day Python learning experience with AI-assisted guidance.
 
 ## Snapshot
-- Canonical URL: `https://python-30.nealfrazier.tech/`
-- Author: `Neal Frazier`
+- Canonical URL: `https://python-30.nullai.tech/`
+- Author: `1nc0gn30`
 - Stack: `React 19 + TypeScript + Vite 6 + Tailwind CSS 4`
 - Deployment target: `Netlify`
 
@@ -48,7 +48,7 @@ npm run preview
 - SPA fallback: `public/_redirects`
 
 ## SEO Baseline
-- Canonical and social URLs point to: `https://python-30.nealfrazier.tech/`
+- Canonical and social URLs point to: `https://python-30.nullai.tech/`
 - `robots.txt` references the same domain sitemap
 - `sitemap.xml` contains the canonical root URL
 
