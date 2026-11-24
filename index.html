@@ -3,27 +3,137 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>30 Days of Python | Master Python with AI Guidance</title>
-    <meta name="description" content="A comprehensive 30-day interactive Python course with a built-in AI tutor. Start your coding journey today with hands-on lessons and expert guidance." />
-    <meta name="keywords" content="Python, Learn Python, Coding Course, AI Tutor, Programming for Beginners, 30 Days of Code" />
-    <meta name="author" content="Neal Frazier" />
-    
+    <title>30 Days of Python | Interactive Python Curriculum &amp; In-Browser Sandbox</title>
+    <meta
+      name="description"
+      content="Free 30-day interactive Python curriculum with an in-browser code runner, 60 knowledge-check quizzes, local progress tracking, and a built-in Python tutor."
+    />
+    <meta
+      name="keywords"
+      content="30 Days of Python, Learn Python, Interactive Python Course, Python Sandbox, Python Exercises, Beginner Python Curriculum, Python Tutor"
+    />
+    <meta name="author" content="Neal Frazier Tech" />
+    <meta name="theme-color" content="#0f172a" />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://python-30.nealfrazier.tech/" />
-    <meta property="og:title" content="30 Days of Python | Master Python with AI" />
-    <meta property="og:description" content="A free interactive guide to mastering Python in 30 days with a personalized AI tutor." />
-    <meta property="og:image" content="https://picsum.photos/seed/python-course/1200/630" />
+    <meta property="og:title" content="30 Days of Python | Interactive Python Curriculum &amp; Sandbox" />
+    <meta
+      property="og:description"
+      content="Learn Python in 30 structured days with hands-on in-browser code execution, daily quizzes, progress persistence, and an always-on local tutor."
+    />
+    <meta property="og:image" content="https://python-30.nealfrazier.tech/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="30 Days of Python interactive curriculum with terminal prompt graphic and Python code snippet" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://python-30.nealfrazier.tech/" />
-    <meta property="twitter:title" content="30 Days of Python | Master Python with AI" />
-    <meta property="twitter:description" content="A free interactive guide to mastering Python in 30 days with a personalized AI tutor." />
-    <meta property="twitter:image" content="https://picsum.photos/seed/python-course/1200/630" />
-    <link rel="canonical" href="https://python-30.nealfrazier.tech/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@1nc0gn30" />
+    <meta name="twitter:creator" content="@1nc0gn30" />
+    <meta name="twitter:url" content="https://python-30.nealfrazier.tech/" />
+    <meta name="twitter:title" content="30 Days of Python | Interactive Python Curriculum &amp; Sandbox" />
+    <meta
+      name="twitter:description"
+      content="Free 30-day interactive Python course with an in-browser code runner, daily quizzes, local progress tracking, and a zero-key Python tutor."
+    />
+    <meta name="twitter:image" content="https://python-30.nealfrazier.tech/og-image.png" />
 
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐍</text></svg>" />
+    <link rel="canonical" href="https://python-30.nealfrazier.tech/" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "@id": "https://python-30.nealfrazier.tech/#app",
+            "name": "30 Days of Python",
+            "url": "https://python-30.nealfrazier.tech/",
+            "description": "Free interactive 30-day Python learning workstation featuring an in-browser Python practice sandbox, 60 comprehension quiz questions, localStorage progress tracking, and a built-in deterministic Python tutor with optional Gemini BYOK support.",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "Web Browser (Windows, macOS, Linux, iOS, Android)",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "creator": {
+              "@type": "Organization",
+              "name": "Neal Frazier Tech",
+              "url": "https://nullai.tech",
+              "founder": {
+                "@type": "Person",
+                "name": "Neal Frazier",
+                "sameAs": "https://github.com/1nc0gn30"
+              }
+            }
+          },
+          {
+            "@type": "Course",
+            "@id": "https://python-30.nealfrazier.tech/#course",
+            "name": "30 Days of Python",
+            "description": "A 30-day self-paced Python 3 curriculum progressing from print statements and variables through control flow, data structures, functions, OOP, decorators, generators, regex, JSON, and a CLI capstone project.",
+            "provider": {
+              "@type": "Organization",
+              "name": "Neal Frazier Tech",
+              "sameAs": "https://nullai.tech"
+            },
+            "educationalLevel": "Beginner to Intermediate",
+            "isAccessibleForFree": true,
+            "inLanguage": "en",
+            "numberOfCredits": 0,
+            "hasCourseInstance": {
+              "@type": "CourseInstance",
+              "courseMode": "online",
+              "courseWorkload": "PT15H"
+            }
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://python-30.nealfrazier.tech/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Is 30 Days of Python completely free and open access?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. All 30 lessons, the in-browser Python practice sandbox, 60 knowledge-check quiz questions, progress tracking, and the local Python tutor are 100% free with no paywalls, accounts, or required API keys."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How is my learning progress and optional API key stored?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "All lesson progress, quiz scores, saved exercise drafts, and any optional Gemini API key are stored exclusively in your browser's localStorage. No tracking backend or account signup is required."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do I need a Gemini API key to use the Python Tutor?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. The built-in Local Python Tutor works immediately out of the box with zero API key, answering syntax, error, and daily exercise questions directly in the browser. You can optionally add a personal Gemini API key in settings for open-ended LLM answers."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

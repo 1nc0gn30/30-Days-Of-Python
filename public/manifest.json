@@ -1,15 +1,16 @@
 {
   "name": "30 Days of Python",
-  "short_name": "Python30",
+  "short_name": "Python 30",
+  "description": "Free 30-day interactive Python curriculum with an in-browser code runner, quizzes, progress tracker, and built-in tutor.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#050505",
-  "theme_color": "#F27D26",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     },
     {
       "src": "/apple-touch-icon.png",

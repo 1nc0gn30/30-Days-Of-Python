@@ -1,270 +1,180 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Monitor, 
-  Terminal, 
-  CheckCircle2, 
-  AlertCircle, 
-  ChevronRight, 
-  ArrowLeft,
-  Settings,
-  Flame,
-  MousePointer2,
-  Cpu
-} from 'lucide-react';
-import { cn } from '../lib/utils';
+import React, { useEffect, useState } from "react";
+import { Terminal, X, CheckCircle2 } from "lucide-react";
+import { cn } from "../lib/utils";
 
-type OS = 'windows' | 'macos' | 'linux';
+type OS = "windows" | "macos" | "linux";
 
 interface OnboardingProps {
-  onComplete: () => void;
+  onClose: () => void;
 }
 
-export function Onboarding({ onComplete }: OnboardingProps) {
-  const [step, setStep] = useState(0);
-  const [os, setOs] = useState<OS | null>(null);
-  const [hasTerminal, setHasTerminal] = useState<boolean | null>(null);
-  const [hasPython, setHasPython] = useState<boolean | null>(null);
+const OS_GUIDE: Record<
+  OS,
+  {
+    label: string;
+    terminalSteps: string[];
+    pythonSteps: string[];
+    verifyCmd: string;
+  }
+> = {
+  windows: {
+    label: "Windows",
+    terminalSteps: [
+      "Open Start Menu and search for Windows Terminal or PowerShell.",
+      "Or press Win + R, type cmd, and press Enter.",
+    ],
+    pythonSteps: [
+      "Install Python 3 from python.org/downloads (or run: winget install Python.Python.3.12).",
+      'Check "Add Python to PATH" in the installer before clicking Install.',
+    ],
+    verifyCmd: "python --version",
+  },
+  macos: {
+    label: "macOS",
+    terminalSteps: [
+      "Press Cmd + Space to open Spotlight.",
+      'Type "Terminal" and press Enter.',
+    ],
+    pythonSteps: [
+      "Install with Homebrew: brew install python",
+      "Or download the universal macOS installer from python.org/downloads.",
+    ],
+    verifyCmd: "python3 --version",
+  },
+  linux: {
+    label: "Linux",
+    terminalSteps: [
+      "Press Ctrl + Alt + T or launch your distribution's Terminal app.",
+    ],
+    pythonSteps: [
+      "Ubuntu / Debian: sudo apt update && sudo apt install python3 python3-venv",
+      "Fedora: sudo dnf install python3  |  Arch: sudo pacman -S python",
+    ],
+    verifyCmd: "python3 --version",
+  },
+};
 
-  const OS_CONFIG = {
-    windows: {
-      name: 'Windows',
-      terminal: 'Command Prompt or PowerShell',
-      terminalSteps: [
-        'Press Win + R on your keyboard.',
-        'Type "cmd" and hit Enter.',
-        'Alternatively, search for "PowerShell" in the Start menu.'
-      ],
-      pythonSteps: [
-        'Go to python.org/downloads.',
-        'Download the Windows installer.',
-        'IMPORTANT: Check the box "Add Python to PATH" before clicking Install.'
-      ]
-    },
-    macos: {
-      name: 'macOS',
-      terminal: 'Terminal',
-      terminalSteps: [
-        'Press Cmd + Space to open Spotlight.',
-        'Type "Terminal" and hit Enter.'
-      ],
-      pythonSteps: [
-        'Open Terminal and type: brew install python (if you have Homebrew).',
-        'Or download the macOS package from python.org/downloads.'
-      ]
-    },
-    linux: {
-      name: 'Linux',
-      terminal: 'Your favorite Terminal emulator',
-      terminalSteps: [
-        'Press Ctrl + Alt + T (usually works).',
-        'Or search for "Terminal" in your applications.'
-      ],
-      pythonSteps: [
-        'Open Terminal.',
-        'Type: sudo apt update && sudo apt install python3 (for Ubuntu/Debian).',
-        'Or use your specific package manager.'
-      ]
-    }
-  };
+export function Onboarding({ onClose }: OnboardingProps) {
+  const [os, setOs] = useState<OS>("linux");
 
-  const nextStep = () => setStep(s => s + 1);
-  const prevStep = () => setStep(s => s - 1);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
 
-  const containerVariants = {
-    hidden: { opacity: 0, x: 20 },
-    visible: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -20 }
-  };
+  const guide = OS_GUIDE[os];
 
   return (
-    <div className="fixed inset-0 z-[100] bg-slate-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-xl bg-white rounded-[2rem] shadow-2xl overflow-hidden relative border border-slate-200">
-        
-        {/* Progress Bar */}
-        <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-100">
-          <motion.div 
-            className="h-full bg-blue-600"
-            initial={{ width: '0%' }}
-            animate={{ width: `${(step / 4) * 100}%` }}
-          />
-        </div>
-
-        <div className="p-8 sm:p-12">
-          <AnimatePresence mode="wait">
-            
-            {/* Step 0: Welcome & OS */}
-            {step === 0 && (
-              <motion.div 
-                key="step0"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                <div className="bg-yellow-400 w-12 h-12 rounded-2xl flex items-center justify-center mb-6 shadow-sm">
-                  <Monitor className="text-slate-900" size={24} />
-                </div>
-                <h1 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight">Ready to code?</h1>
-                <p className="text-slate-600 mb-8 leading-relaxed">
-                  Before we dive into the Python curriculum, let's make sure your environment is ready for success. What operating system are you using?
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {(['windows', 'macos', 'linux'] as OS[]).map(type => (
-                    <button
-                      key={type}
-                      onClick={() => { setOs(type); nextStep(); }}
-                      className={cn(
-                        "p-4 rounded-2xl border-2 transition-all text-left flex flex-col items-center gap-2 group",
-                        "hover:border-blue-600 hover:bg-blue-50/50",
-                        "border-slate-100"
-                      )}
-                    >
-                      <span className="capitalize font-bold text-slate-800">{type}</span>
-                    </button>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-
-            {/* Step 1: Terminal Check */}
-            {step === 1 && (
-              <motion.div key="step1" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
-                <div className="bg-slate-900 w-12 h-12 rounded-2xl flex items-center justify-center mb-6 shadow-sm">
-                  <Terminal className="text-yellow-400" size={24} />
-                </div>
-                <h2 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight">The Terminal</h2>
-                <p className="text-slate-600 mb-8 leading-relaxed">
-                  To run Python code, you'll need to use your {OS_CONFIG[os!].name} terminal. Do you know how to open and use it?
-                </p>
-                <div className="flex flex-col gap-3">
-                  <button 
-                    onClick={() => { setHasTerminal(true); setStep(3); }}
-                    className="w-full p-4 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all flex items-center justify-between"
-                  >
-                    Yes, I'm a terminal pro!
-                    <ChevronRight size={20} />
-                  </button>
-                  <button 
-                    onClick={() => { setHasTerminal(false); nextStep(); }}
-                    className="w-full p-4 rounded-2xl border-2 border-slate-100 text-slate-700 font-bold hover:border-slate-200 transition-all text-left"
-                  >
-                    I'm not sure, teach me.
-                  </button>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Step 2: Terminal Instruction */}
-            {step === 2 && (
-              <motion.div key="step2" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
-                <div className="bg-blue-100 w-12 h-12 rounded-2xl flex items-center justify-center mb-6">
-                  <MousePointer2 className="text-blue-600" size={24} />
-                </div>
-                <h2 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight">Opening the Terminal</h2>
-                <div className="space-y-4 mb-8">
-                  {OS_CONFIG[os!].terminalSteps.map((stepText, idx) => (
-                    <div key={idx} className="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
-                      <span className="font-mono font-bold text-blue-600">{idx + 1}</span>
-                      <p className="text-slate-700 text-sm">{stepText}</p>
-                    </div>
-                  ))}
-                </div>
-                <button 
-                  onClick={nextStep}
-                  className="w-full p-4 rounded-2xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-all"
-                >
-                  Got it, it's open!
-                </button>
-              </motion.div>
-            )}
-
-            {/* Step 3: Python Check */}
-            {step === 3 && (
-              <motion.div key="step3" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
-                <div className="bg-yellow-400 w-12 h-12 rounded-2xl flex items-center justify-center mb-6">
-                  <Cpu className="text-slate-900" size={24} />
-                </div>
-                <h2 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight">Python Check</h2>
-                <p className="text-slate-600 mb-8 leading-relaxed">
-                  Final check: Is Python 3 installed on your {os} machine? You can check by typing <code className="bg-slate-100 px-1 rounded">python --version</code> in your terminal.
-                </p>
-                <div className="flex flex-col gap-3">
-                  <button 
-                    onClick={() => { setHasPython(true); setStep(5); }}
-                    className="w-full p-4 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all flex items-center justify-between"
-                  >
-                    Yep, Python is ready.
-                    <ChevronRight size={20} />
-                  </button>
-                  <button 
-                    onClick={() => { setHasPython(false); nextStep(); }}
-                    className="w-full p-4 rounded-2xl border-2 border-slate-100 text-slate-700 font-bold hover:border-slate-200 transition-all text-left"
-                  >
-                    I need to install it.
-                  </button>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Step 4: Python Instruction */}
-            {step === 4 && (
-              <motion.div key="step4" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
-                <div className="bg-emerald-100 w-12 h-12 rounded-2xl flex items-center justify-center mb-6">
-                  <Flame className="text-emerald-600" size={24} />
-                </div>
-                <h2 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight">Installing Python</h2>
-                <div className="space-y-4 mb-8">
-                  {OS_CONFIG[os!].pythonSteps.map((stepText, idx) => (
-                    <div key={idx} className="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
-                      <span className="font-mono font-bold text-emerald-600">{idx + 1}</span>
-                      <p className="text-slate-700 text-sm">{stepText}</p>
-                    </div>
-                  ))}
-                </div>
-                <button 
-                  onClick={nextStep}
-                  className="w-full p-4 rounded-2xl bg-slate-900 text-white font-bold hover:bg-slate-800 transition-all"
-                >
-                  Installed! Let's go.
-                </button>
-              </motion.div>
-            )}
-
-            {/* Step 5: Success */}
-            {step === 5 && (
-              <motion.div key="step5" className="text-center" variants={containerVariants} initial="hidden" animate="visible" exit="exit">
-                <div className="bg-emerald-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-200 text-white">
-                  <CheckCircle2 size={32} />
-                </div>
-                <h2 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight">You're All Set!</h2>
-                <p className="text-slate-600 mb-8 leading-relaxed max-w-sm mx-auto">
-                  Your environment is ready. You have the terminal, you have Python, and you have wisdom. It's time to become a Python master.
-                </p>
-                <button 
-                  onClick={onComplete}
-                  className="w-full p-5 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 active:scale-95"
-                >
-                  Enter the Course
-                </button>
-              </motion.div>
-            )}
-
-          </AnimatePresence>
-        </div>
-
-        {/* Footer/Back Button */}
-        {step > 0 && step < 5 && (
-          <div className="bg-slate-50 p-4 border-t border-slate-100 flex items-center">
-            <button 
-              onClick={prevStep}
-              className="flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors text-sm font-semibold"
-            >
-              <ArrowLeft size={16} />
-              Go Back
-            </button>
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="setup-guide-title"
+      className="fixed inset-0 z-[100] bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <div
+        className="w-full max-w-xl bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden max-h-[90vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-yellow-400 text-slate-950 flex items-center justify-center">
+              <Terminal size={17} aria-hidden="true" />
+            </div>
+            <div>
+              <h2 id="setup-guide-title" className="text-base font-bold leading-tight">
+                Local Python 3 Setup Guide
+              </h2>
+              <p className="text-[11px] text-slate-300">
+                Optional — you can also run exercises directly in the in-browser lab.
+              </p>
+            </div>
           </div>
-        )}
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close setup guide"
+            className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800"
+          >
+            <X size={18} aria-hidden="true" />
+          </button>
+        </div>
+
+        <div className="p-6 overflow-y-auto space-y-5">
+          {/* OS Switcher */}
+          <div className="grid grid-cols-3 gap-2 p-1 rounded-xl bg-slate-100 border border-slate-200">
+            {(["windows", "macos", "linux"] as OS[]).map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => setOs(item)}
+                className={cn(
+                  "py-2 min-h-[40px] rounded-lg text-xs font-bold transition-colors",
+                  os === item
+                    ? "bg-slate-900 text-white shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
+                )}
+              >
+                {OS_GUIDE[item].label}
+              </button>
+            ))}
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-slate-500">
+              1. Open your terminal
+            </h3>
+            <ul className="space-y-2">
+              {guide.terminalSteps.map((step, i) => (
+                <li
+                  key={i}
+                  className="flex gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-700"
+                >
+                  <span className="font-mono font-bold text-blue-700">{i + 1}.</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="text-xs font-mono uppercase tracking-wider font-bold text-slate-500">
+              2. Install Python 3
+            </h3>
+            <ul className="space-y-2">
+              {guide.pythonSteps.map((step, i) => (
+                <li
+                  key={i}
+                  className="flex gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200 text-sm text-slate-700"
+                >
+                  <span className="font-mono font-bold text-emerald-700">{i + 1}.</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="rounded-xl bg-slate-950 text-slate-100 p-4 font-mono text-xs flex items-center justify-between gap-2">
+            <span>
+              <span className="text-yellow-400">$</span> {guide.verifyCmd}
+            </span>
+            <span className="text-emerald-400 inline-flex items-center gap-1">
+              <CheckCircle2 size={13} aria-hidden="true" />
+              Python 3.12+
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full py-3 min-h-[44px] rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-colors"
+          >
+            Back to Curriculum
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,24 @@
-User-agent: GPTBot
-Disallow: /
+# 30 Days of Python — AI Crawler Policy
+# Open-access educational curriculum engineered by Neal Frazier Tech (@1nc0gn30)
 
-User-agent: CCBot
-Disallow: /
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+Canonical: https://python-30.nealfrazier.tech/
+Repository: https://github.com/1nc0gn30/30-Days-Of-Python
+Sitemap: https://python-30.nealfrazier.tech/sitemap.xml
